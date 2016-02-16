@@ -81,6 +81,14 @@ Page test_page
 
         HorizontalLayout buttons
         {
+            string[..] button_texts;
+
+            void setup_buttons()
+            {
+                button1.text = button_texts[LEFT];
+                button2.text = button_texts[RIGHT];
+            }
+
             init()
             {
                 spacing = 50;
@@ -92,7 +100,6 @@ Page test_page
             {
                 init()
                 {
-                    text = "Same";
                     font_family = TEST_PAGE_BUTTON_FONT_FAMILY;
                     font_size = TEST_PAGE_BUTTON_FONT_SIZE;
                     fill_pattern_color = TEST_PAGE_BUTTON_COLOR;
@@ -112,7 +119,6 @@ Page test_page
             {
                 init()
                 {
-                    text = "Different";
                     font_family = TEST_PAGE_BUTTON_FONT_FAMILY;
                     font_size = TEST_PAGE_BUTTON_FONT_SIZE;
                     fill_pattern_color = TEST_PAGE_BUTTON_COLOR;
@@ -259,25 +265,58 @@ Page test_page
     {
         test_page_overlay.setup(this);
 
-        // Show or hide prompt.
-        test_page_overlay.show_prompt(pr ? 
-            "did you hear <i>same</i> or <i>different</i> sounds" : "", 
-            true);
-
         // Enable or disable the progress bar.
         test_page_overlay.show_progress_bar(ntrials);   // disabled if < 0
 
         // Enable or disable feedback.
         test_page_overlay.enable_feedback(fb);          // disabled if false
 
-
         // Enable button-box buttons 0 and 1 for resp. same(0) and diff(1).
         control.target = this;
         control.button_box.disable_buttons();
-        control.button_box.enable_button(0, 0); // button 0 means same(0)
-        control.button_box.enable_button(1, 1); // button 1 means diff(1)
+        
+        // Corrections for dexterity (i.e. left or right-handiness)
+        if(experiment.LEFTSIDE_EQUAL)
+        {
+            setup_left_button_as_equal_option();
+            test_page_overlay.show_prompt(pr ? 
+            "did you hear <i>"+EQUAL_BUTTON_TEXT+"</i> or <i>"+UNEQUAL_BUTTON_TEXT+"</i> sounds" : "", 
+            true);
+        }
+        else
+        {
+            setup_right_button_as_equal_option();
+            test_page_overlay.show_prompt(pr ? 
+            "did you hear <i>"+UNEQUAL_BUTTON_TEXT+"</i> or <i>"+EQUAL_BUTTON_TEXT+"</i> sounds" : "", 
+            true);
+        }
     }
 
+    void setup_left_button_as_equal_option()
+    {
+        layout.buttons.button_texts.size = 2;
+        layout.buttons.button_texts[LEFT] = EQUAL_BUTTON_TEXT;
+        layout.buttons.button_texts[RIGHT] = UNEQUAL_BUTTON_TEXT;
+
+        layout.buttons.setup_buttons();
+
+        control.button_box.enable_button(0, 0); // button 0 means same(0)
+        control.button_box.enable_button(2, 1); // button 1 means diff(1)
+
+
+    }
+
+    void setup_right_button_as_equal_option()
+    {
+        layout.buttons.button_texts.size = 2;
+        layout.buttons.button_texts[LEFT] = UNEQUAL_BUTTON_TEXT;
+        layout.buttons.button_texts[RIGHT] = EQUAL_BUTTON_TEXT;
+
+        layout.buttons.setup_buttons();
+
+        control.button_box.enable_button(0, 1); // button 0 means same(0)
+        control.button_box.enable_button(2, 0); // button 1 means diff(1)
+    }
 
     // Performs cleaning up if necessary.
     void cleanup()

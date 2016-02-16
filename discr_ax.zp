@@ -28,7 +28,7 @@ HISTORY:
 requires 1.12;
 
 import std_windows1;
-import std_texts_en;
+import texts_en;
 import std_entry_page1;
 import std_exit_page1;
 import std_pause_page;
@@ -36,11 +36,22 @@ import std_blank_page;
 
 import test::task;
 
+enum Side {
+    LEFT,
+    RIGHT
+}
 
 Experiment experiment
 {
+    bool LEFTSIDE_EQUAL = true;
+
     on_event:entry()
     {
+        if(expdb.participant.get_enum_field(HANDNESS_DESCRIPTION) == "right")
+            LEFTSIDE_EQUAL = true;
+        else
+            LEFTSIDE_EQUAL = false;
+
         show_test_windows();
     }
 
