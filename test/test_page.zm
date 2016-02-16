@@ -32,9 +32,9 @@ Page test_page
     {
         // Handle left-shift (same) and right-shift (diff).
         if (input_key == KEY_Shift_L)
-            response.process_hit(0, event_time);
+            response.process_hit(layout.buttons.button_responses[LEFT], event_time);
         else if (input_key == KEY_Shift_R)
-            response.process_hit(1, event_time);
+            response.process_hit(layout.buttons.button_responses[RIGHT], event_time);
         else
             handle_special_key(this, input_key, input_modifiers);
     }
@@ -82,11 +82,15 @@ Page test_page
         HorizontalLayout buttons
         {
             string[..] button_texts;
+            int[..] button_responses;
 
             void setup_buttons()
             {
                 button1.text = button_texts[LEFT];
+                button1.button_response = button_responses[LEFT];
+
                 button2.text = button_texts[RIGHT];
+                button2.button_response = button_responses[RIGHT];
             }
 
             init()
@@ -98,6 +102,8 @@ Page test_page
 
             ButtonGadget button1
             {
+                int button_response;
+
                 init()
                 {
                     font_family = TEST_PAGE_BUTTON_FONT_FAMILY;
@@ -110,13 +116,15 @@ Page test_page
 
                 on_event:activate()
                 {
-                    response.process_hit(0, event_time);
+                    response.process_hit(button_response, event_time);
                 }
             }
 
 
             ButtonGadget button2
             {
+                int button_response;
+
                 init()
                 {
                     font_family = TEST_PAGE_BUTTON_FONT_FAMILY;
@@ -129,7 +137,7 @@ Page test_page
 
                 on_event:activate()
                 {
-                    response.process_hit(1, event_time);
+                    response.process_hit(button_response, event_time);
                 }
             }
         }
@@ -294,28 +302,38 @@ Page test_page
 
     void setup_left_button_as_equal_option()
     {
+        int left_code = 0;
+        int right_code = 1;
+
         layout.buttons.button_texts.size = 2;
+        layout.buttons.button_responses.size = 2;
         layout.buttons.button_texts[LEFT] = EQUAL_BUTTON_TEXT;
+        layout.buttons.button_responses[LEFT] = left_code;
         layout.buttons.button_texts[RIGHT] = UNEQUAL_BUTTON_TEXT;
+        layout.buttons.button_responses[RIGHT] = right_code;
 
         layout.buttons.setup_buttons();
 
-        control.button_box.enable_button(0, 0); // button 0 means same(0)
-        control.button_box.enable_button(2, 1); // button 1 means diff(1)
-
-
+        control.button_box.enable_button(0, left_code); // button 0 means same(0)
+        control.button_box.enable_button(2, right_code); // button 1 means diff(1)
     }
 
     void setup_right_button_as_equal_option()
     {
+        int left_code   = 1;
+        int right_code  = 0;
+
         layout.buttons.button_texts.size = 2;
+        layout.buttons.button_responses.size = 2;
         layout.buttons.button_texts[LEFT] = UNEQUAL_BUTTON_TEXT;
+        layout.buttons.button_responses[LEFT] = left_code;
         layout.buttons.button_texts[RIGHT] = EQUAL_BUTTON_TEXT;
+        layout.buttons.button_responses[RIGHT] = right_code;
 
         layout.buttons.setup_buttons();
 
-        control.button_box.enable_button(0, 1); // button 0 means same(0)
-        control.button_box.enable_button(2, 0); // button 1 means diff(1)
+        control.button_box.enable_button(0, left_code); // button 0 means same(0)
+        control.button_box.enable_button(2, right_code); // button 1 means diff(1)
     }
 
     // Performs cleaning up if necessary.
