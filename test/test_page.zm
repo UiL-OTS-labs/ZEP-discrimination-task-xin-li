@@ -228,6 +228,7 @@ Page test_page
             else if (validity == HIT_TOO_EARLY || validity == HIT_TOO_LATE)
             {
                 // False alarm. Deal with this if desired.
+                println("Participant pressed a button outside the response window!");
             }
         }
 
