@@ -192,14 +192,11 @@ Block task
                 TestOutput output;
                 output.trialnum = test.cycle + 1;
                 output.id = item.id;
-                output.type1 = item.type1;
-                output.type2 = item.type2;
                 output.sndfn1 = item.sndfn1;
                 output.sndfn2 = item.sndfn2;
                 output.value = test_page.response.value;
                 output.rt = test_page.response.rt;
-                output.correct = test_page.response.correct;
-                
+
                 output.handedness = expdb.participant.get_enum_field(HANDEDNESS_DESCRIPTION);
                 output.language = expdb.participant.get_enum_field(LANGUAGE_DESCRIPTION);
 

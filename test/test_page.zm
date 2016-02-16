@@ -216,14 +216,12 @@ Page test_page
         // Response data.
         int     value;          // response value: 0=same, 1=diff, -1=timeout
         int     rt;             // response time [ms]
-        int     correct;        // correct response: 0=no, 1=yes, -1=n.a.
 
 
         void clear()
         {
             value = -1;
             rt = -9999;
-            correct = -1;
         }
 
 
@@ -237,10 +235,6 @@ Page test_page
             {
                 value = val;
                 rt = int(reaction_time(0));
-                if (item.type1 == item.type2)
-                    correct = val == 0; // correct if response is same
-                else
-                    correct = val != 0; // correct if response is diff
 
                 time stop_time = now();
 
@@ -264,8 +258,8 @@ Page test_page
 
         on_event:finish()
         {
-            real correctness = 0;
-            if (num_valid_hits > 0) correctness = correct ? 1 : -1;
+            real correctness = -1;
+            if (num_valid_hits > 0) correctness = (item.sndfn1 == item.sndfn2) == bool(value) ? 1 : -1;
 
             if (!test_page_overlay.start_feedback(this, correctness, 
                     FEEDBACK_DURATION)) 
@@ -410,8 +404,6 @@ Page test_page
         // Update status line on control window. Cleared in done() above.
         control.set_status(
             string(item.id) + "  " + 
-            string(item.type1) + "  " + 
-            string(item.type2) + "  " + 
             string(item.sndfn1) + "  " + 
             string(item.sndfn2));
 

@@ -15,23 +15,10 @@ HISTORY:
 \******************************************************************************/
 
 
-// Symbolic definition of stimulus type.
-enum StimType
-{
-    S1,                 // ba-da continuum step 1 (begin)
-    S2,                 // ba-da continuum step 2
-    S3,                 // ba-da continuum step 3 (center)
-    S4,                 // ba-da continuum step 4
-    S5,                 // ba-da continuum step 5 (end)
-}
-
-
 // Item table record.
 record TestItem
 {
     int         id;             // item id
-    StimType    type1;          // stimulus type for first interval
-    StimType    type2;          // stimulus type for second interval
     string      sndfn1;         // stimulus sound filename first interval
     string      sndfn2;         // stimulus sound filename second interval
 }
@@ -41,10 +28,10 @@ record TestItem
 //   index: item number
 TestItem[..] prac_items =
 {
-    {1,         S1,     S1,     "a1.wav",    "a1.wav"},
-    {2,         S2,     S4,     "a1.wav",    "a1.wav"},
-    {3,         S5,     S1,     "a1.wav",    "a1.wav"},
-    {4,         S3,     S3,     "a1.wav",    "a1.wav"},
+    {1,"a1.wav",    "a1.wav"},
+    {2,"a1.wav",    "a1.wav"},
+    {3, "a1.wav",    "a1.wav"},
+    {4, "a1.wav",    "a1.wav"},
 };
 
 
@@ -52,33 +39,15 @@ TestItem[..] prac_items =
 //   index: item number
 TestItem[..] test_items =
 {
-    {1,         S1,     S1,     "a1.wav",    "a1.wav"},
-    {2,         S2,     S1,     "a2.wav",    "a1.wav"},
-    {3,         S3,     S1,     "a3.wav",    "a1.wav"},
-    {4,         S4,     S1,     "a4.wav",    "a1.wav"},
-    {5,         S5,     S1,     "a5.wav",    "a1.wav"},
-/*
-    {6,         S1,     S2,     "a1.wav",    "a2.wav"},
-    {7,         S2,     S2,     "a2.wav",    "a2.wav"},
-    {8,         S3,     S2,     "a3.wav",    "a2.wav"},
-    {9,         S4,     S2,     "a4.wav",    "a2.wav"},
-    {10,        S5,     S2,     "a5.wav",    "a2.wav"},
+    {1, "a1.wav",    "a1.wav"},
+    {2, "a2.wav",    "a1.wav"},
+    {3, "a3.wav",    "a1.wav"},
+    {4, "a4.wav",    "a1.wav"},
+    {5, "a5.wav",    "a1.wav"},
 
-    {11,        S1,     S3,     "a1.wav",    "a3.wav"},
-    {12,        S2,     S3,     "a2.wav",    "a3.wav"},
-    {13,        S3,     S3,     "a3.wav",    "a3.wav"},
-    {14,        S4,     S3,     "a4.wav",    "a3.wav"},
-    {15,        S5,     S3,     "a5.wav",    "a3.wav"},
-
-    {16,        S1,     S4,     "a1.wav",    "a4.wav"},
-    {17,        S2,     S4,     "a2.wav",    "a4.wav"},
-    {18,        S3,     S4,     "a3.wav",    "a4.wav"},
-    {19,        S4,     S4,     "a4.wav",    "a4.wav"},
-    {20,        S5,     S4,     "a5.wav",    "a4.wav"},
-*/
-    {21,        S1,     S5,     "a1.wav",    "a5.wav"},
-    {22,        S2,     S5,     "a2.wav",    "a5.wav"},
-    {23,        S3,     S5,     "a3.wav",    "a5.wav"},
-    {24,        S4,     S5,     "a4.wav",    "a5.wav"},
-    {25,        S5,     S5,     "a5.wav",    "a5.wav"},
+    {21, "a1.wav",    "a5.wav"},
+    {22, "a2.wav",    "a5.wav"},
+    {23, "a3.wav",    "a5.wav"},
+    {24, "a4.wav",    "a5.wav"},
+    {25, "a5.wav",    "a5.wav"},
 };
