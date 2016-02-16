@@ -41,7 +41,7 @@ Page test_page
 
 
     on_event:message()
-    {
+    { 
         // Process button-box message. See setup() below.
         response.process_hit(message_arg, event_time);
     }
@@ -100,9 +100,27 @@ Page test_page
             }
 
 
+            Timer feedback_provider
+            {
+                ButtonGadget target_buggot;
+
+                time start_feedback(ButtonGadget button)
+                {
+                    target_buggot = button;
+                    target_buggot.fill_pattern_color = color:lightslategray;
+                    start(now() + BUTTON_FEEDBACK_DURATION);
+                    return this.expected_expire_time;
+                }
+
+                on_event:expire()
+                {
+                    target_buggot.fill_pattern_color = TEST_PAGE_BUTTON_COLOR;
+                }
+            }
+
             ButtonGadget button1
             {
-                int button_response;
+                int button_response = -1;
 
                 init()
                 {
@@ -111,6 +129,7 @@ Page test_page
                     fill_pattern_color = TEST_PAGE_BUTTON_COLOR;
                     text_color = TEST_PAGE_BUTTON_TEXT_COLOR;
                     size = 150, 75;
+                    has_outline = true;
                 }
 
 
@@ -123,7 +142,7 @@ Page test_page
 
             ButtonGadget button2
             {
-                int button_response;
+                int button_response  = -1;
 
                 init()
                 {
@@ -156,6 +175,8 @@ Page test_page
         void reset()
         {
             full_abort();
+            buttons.button1.fill_pattern_color=TEST_PAGE_BUTTON_COLOR;
+            buttons.button2.fill_pattern_color=TEST_PAGE_BUTTON_COLOR;
         }
     }
 
@@ -221,9 +242,17 @@ Page test_page
                 else
                     correct = val != 0; // correct if response is diff
 
+                time stop_time = now();
+
+                if(layout.buttons.button1.button_response == val)
+                    stop_time = layout.buttons.feedback_provider.start_feedback(layout.buttons.button1);
+                else
+                    stop_time = layout.buttons.feedback_provider.start_feedback(layout.buttons.button2);
+
+
                 ignore_remaining_hits();
 
-                stop();
+                stop(stop_time);
             }
             else if (validity == HIT_TOO_EARLY || validity == HIT_TOO_LATE)
             {

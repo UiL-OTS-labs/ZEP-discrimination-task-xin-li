@@ -15,16 +15,19 @@ HISTORY:
 
 
 // Duration of the interval between two trials.
-const dur       INTERTRIAL_INTERVAL             = 1000ms;
+const dur       INTERTRIAL_INTERVAL             = 2000ms;
 
 // Duration of the interval between the stimuli in a trial.
-const dur       INTERSTIMULUS_INTERVAL          = 250ms;
+const dur       INTERSTIMULUS_INTERVAL          = 100ms;
 
 // Duration of the fixation symbol presentation.
 const dur       FIXATION_DURATION               = 1000ms;
 
 // Duration of the feedback presentation.
 const dur       FEEDBACK_DURATION               = 1000ms;
+
+// Duration of the feedback on buttonpress.
+const dur       BUTTON_FEEDBACK_DURATION         = 400ms;
 
 // Duration of the response interval. A value of 0ms means there is no
 // timeout.
