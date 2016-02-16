@@ -28,6 +28,9 @@ record TestOutput
     int         value;          // response value: 0=diff, 1=same, -1=timeout
     int         rt;             // response time [ms]
     int         correct;        // correct response: 0=no, 1=yes, -1=n.a.
+
+    string      handedness;
+    string      language;
 }
 
 

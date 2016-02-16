@@ -47,7 +47,7 @@ Experiment experiment
 
     on_event:entry()
     {
-        if(expdb.participant.get_enum_field(HANDNESS_DESCRIPTION) == "right")
+        if(expdb.participant.get_enum_field(HANDEDNESS_DESCRIPTION) == "right")
             LEFTSIDE_EQUAL = true;
         else
             LEFTSIDE_EQUAL = false;

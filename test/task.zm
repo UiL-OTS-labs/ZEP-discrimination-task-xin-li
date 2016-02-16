@@ -199,6 +199,10 @@ Block task
                 output.value = test_page.response.value;
                 output.rt = test_page.response.rt;
                 output.correct = test_page.response.correct;
+                
+                output.handedness = expdb.participant.get_enum_field(HANDEDNESS_DESCRIPTION);
+                output.language = expdb.participant.get_enum_field(LANGUAGE_DESCRIPTION);
+
                 test_output_append(output);
             }
         }
