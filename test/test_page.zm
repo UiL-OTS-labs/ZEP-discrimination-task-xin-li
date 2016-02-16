@@ -302,35 +302,35 @@ Page test_page
 
     void setup_left_button_as_equal_option()
     {
-        int left_code = 0;
-        int right_code = 1;
-
+        int left_code   = 1;
+        int right_code  = 0;
+        setup_button_with_codes(left_code, right_code);
+        
         layout.buttons.button_texts.size = 2;
-        layout.buttons.button_responses.size = 2;
         layout.buttons.button_texts[LEFT] = EQUAL_BUTTON_TEXT;
-        layout.buttons.button_responses[LEFT] = left_code;
         layout.buttons.button_texts[RIGHT] = UNEQUAL_BUTTON_TEXT;
-        layout.buttons.button_responses[RIGHT] = right_code;
 
         layout.buttons.setup_buttons();
-
-        control.button_box.enable_button(0, left_code); // button 0 means same(0)
-        control.button_box.enable_button(2, right_code); // button 1 means diff(1)
     }
 
     void setup_right_button_as_equal_option()
     {
-        int left_code   = 1;
-        int right_code  = 0;
+        int left_code   = 0;
+        int right_code  = 1;
+        setup_button_with_codes(left_code, right_code);
 
         layout.buttons.button_texts.size = 2;
-        layout.buttons.button_responses.size = 2;
         layout.buttons.button_texts[LEFT] = UNEQUAL_BUTTON_TEXT;
-        layout.buttons.button_responses[LEFT] = left_code;
         layout.buttons.button_texts[RIGHT] = EQUAL_BUTTON_TEXT;
-        layout.buttons.button_responses[RIGHT] = right_code;
 
         layout.buttons.setup_buttons();
+    }
+
+    void setup_button_with_codes(int left_code, int right_code)
+    {
+        layout.buttons.button_responses.size = 2;
+        layout.buttons.button_responses[LEFT] = left_code;
+        layout.buttons.button_responses[RIGHT] = right_code;
 
         control.button_box.enable_button(0, left_code); // button 0 means same(0)
         control.button_box.enable_button(2, right_code); // button 1 means diff(1)
