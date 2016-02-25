@@ -89,16 +89,20 @@ Block task
     Block practice
     {
         TestItem        item;   // current item
-
+        TestItem[..]    missed_items;
 
         on_event:entry()
         {
+            setup();
+        }
+
+        void setup()
+        {  
             num_cycles = prac_items.size;
 
             // Prepare test page: progress bar, feedback and prompt enabled.
             test_page.setup(num_cycles, true, true);
         }
-
 
         on_event:exit()
         {
@@ -108,11 +112,76 @@ Block task
 
         Trial trial
         {
+            bool reset = false;
+
             on_event:entry()
             {
+                if(reset)
+                {
+                    practice.cycle = 0;
+                    practice.setup();
+                    reset = false;
+                }
+
                 item = prac_items[practice.cycle];
 
                 test_page.action(this, item, reference_time, practice.cycle);
+            }
+
+            on_event:exit()
+            {
+                if(missed_current_item())
+                {
+                    prac_items.size = prac_items.size+1;
+                    prac_items[prac_items.size-1] = item;
+                    practice.setup();
+                }
+
+
+                //    mark_item_as_missed();
+
+                //if(end_of_practice() && have_missing_items()) // at the end of the practice round...
+                  //  redo_missed_items();
+            }
+
+            void mark_item_as_missed()
+            {
+                missed_items.size = missed_items.size + 1;
+                missed_items[missed_items.size - 1] = item;
+                println("Missed: " + item.id);
+            }
+
+            void redo_missed_items()
+            {
+                prac_items.size = 0;
+
+                // Cannot easily(?) reference arrays in ZEP, so do a deep copy.
+                int index = 0; 
+                while(index < missed_items.size)
+                {
+                    prac_items.size = prac_items.size+1;
+                    prac_items[index] = missed_items[index];
+                    index++;
+                }
+        
+                missed_items.size = 0;
+                trial.reset = true;
+                practice.num_cycles = practice.num_cycles+1; //Make sure you are not stoped at the end!
+            }
+
+            bool missed_current_item()
+            {
+                return test_page.response.correctness == 0;
+            }
+
+            bool end_of_practice()
+            {
+                return practice.cycle == practice.num_cycles-1;
+            }
+
+            bool have_missing_items()
+            {
+                return missed_items.size > 0;
             }
         }
     }

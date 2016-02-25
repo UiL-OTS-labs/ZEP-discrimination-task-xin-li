@@ -26,6 +26,7 @@ record TestItem
 
 // Practice item table.
 //   index: item number
+
 TestItem[..] prac_items =
 {
     {1,"a1.wav",    "a1.wav"},
