@@ -34,7 +34,15 @@ import std_exit_page1;
 import std_pause_page;
 import std_blank_page;
 
-import test::task;
+import practice::task_practice;
+import test::task_test;
+
+import globaldefs;
+import defs;
+import stimuli;
+import shuffle;
+import output;
+import test_page;
 
 enum Side {
     LEFT,
@@ -76,15 +84,79 @@ Experiment experiment
         }
     }
 
-
-    Part phase1
+    Part practice_phase
     {
         on_event:entry()
         {
+            practice::action(this);
+        }
+    }
+
+    Part test_phase_block_1
+    {
+        on_event:entry()
+        {   
+            test::task_test.test.block = 1;
+            test::task_test.test.test_items = test_items_all_blocks[test::task_test.test.block-1];
             test::action(this);
         }
     }
 
+     Part
+    {
+        on_event:entry()
+        {
+            blank_page.action_auto(this, 500ms);
+        }
+    }
+
+    Part
+    {
+        on_event:entry()
+        {
+            pause_page.set_text("Time for a short break.", true);
+            pause_page.action(this);
+            control.button_box.enable_all_buttons(CONTINUE);
+        }
+    }
+
+    Part test_phase_block_2
+    {
+        on_event:entry()
+        {   
+            test::task_test.test.block = 2;
+            test::task_test.test.test_items = test_items_all_blocks[test::task_test.test.block-1];
+            test::action(this);
+        }
+    }
+
+     Part
+    {
+        on_event:entry()
+        {
+            blank_page.action_auto(this, 500ms);
+        }
+    }
+
+    Part
+    {
+        on_event:entry()
+        {
+            pause_page.set_text("Time for a short break.", true);
+            pause_page.action(this);
+            control.button_box.enable_all_buttons(CONTINUE);
+        }
+    }
+
+    Part test_phase_block_3
+    {
+        on_event:entry()
+        {   
+            test::task_test.test.block = 3;
+            test::task_test.test.test_items = test_items_all_blocks[test::task_test.test.block-1];
+            test::action(this);
+        }
+    }
 
     Part thankyou
     {

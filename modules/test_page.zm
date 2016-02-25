@@ -35,6 +35,11 @@ Page test_page
             response.process_hit(layout.buttons.button_responses[LEFT], event_time);
         else if (input_key == KEY_Shift_R)
             response.process_hit(layout.buttons.button_responses[RIGHT], event_time);
+        else if (input_key == KEY_Escape)
+        {
+            test_page.response.correctness = 3.0;
+            done(CONTINUE);
+        }
         else
             handle_special_key(this, input_key, input_modifiers);
     }
@@ -403,7 +408,8 @@ Page test_page
 
         // Update status line on control window. Cleared in done() above.
         control.set_status(
-            string(item.id) + "  " + 
+            string(item.id) + "  " +
+            string(item.block) + "  " + 
             string(item.sndfn1) + "  " + 
             string(item.sndfn2));
 

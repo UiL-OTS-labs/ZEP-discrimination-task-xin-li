@@ -20,6 +20,7 @@ record TestOutput
     int         trialnum;       // trial number
 
     int         id;             // item id
+    int         block;             // item block
 
     string      sndfn1;         // stimulus sound filename first interval
     string      sndfn2;         // stimulus sound filename second interval

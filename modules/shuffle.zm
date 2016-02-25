@@ -15,7 +15,7 @@ HISTORY:
 
 
 // Shuffles test_items table (no restrictions on item order).
-int shuffle_test_items()
+int shuffle_test_items(TestItem[] test_items)
 {
     test_items.shuffle(0, -1);
 
