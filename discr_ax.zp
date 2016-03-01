@@ -158,6 +158,26 @@ Experiment experiment
         }
     }
 
+    Part
+    {
+        on_event:entry()
+        {
+            pause_page.set_text("Time for a short break.", true);
+            pause_page.action(this);
+            control.button_box.enable_all_buttons(CONTINUE);
+        }
+    }
+
+    Part test_phase_block_4
+    {
+        on_event:entry()
+        {   
+            test::task_test.test.block = 4;
+            test::task_test.test.test_items = test_items_all_blocks[test::task_test.test.block-1];
+            test::action(this);
+        }
+    }
+
     Part thankyou
     {
         on_event:entry()
