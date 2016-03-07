@@ -31,11 +31,6 @@ requires 1.12;
 
 Block task_test
 {
-    on_event:entry()
-    {
-        control.button_box.open();
-    }
-
     Part
     {
         on_event:entry()

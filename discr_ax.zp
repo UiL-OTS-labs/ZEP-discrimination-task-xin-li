@@ -59,7 +59,7 @@ Experiment experiment
             LEFTSIDE_EQUAL = true;
         else
             LEFTSIDE_EQUAL = false;
-
+		control.button_box.open("/dev/ttyACM0");
         show_test_windows();
     }
 
